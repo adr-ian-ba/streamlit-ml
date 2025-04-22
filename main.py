@@ -1,8 +1,13 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import gdown
 
-with open("best_rf_model.pkl", "rb") as f:
+model_path = "best_rf_model.pkl"
+url = "https://drive.google.com/uc?id=1Ji_Nc_VUH7SBbXQ7hNMyGL76_OqxHbnb"
+gdown.download(url, model_path, quiet=False)
+
+with open(model_path, "rb") as f:
     saved = pickle.load(f)
 
 model = saved["model"]
