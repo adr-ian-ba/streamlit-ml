@@ -2,10 +2,14 @@ import streamlit as st
 import pickle
 import pandas as pd
 import gdown
+import os
+
 
 model_path = "best_rf_model.pkl"
 url = "https://drive.google.com/uc?id=1Ji_Nc_VUH7SBbXQ7hNMyGL76_OqxHbnb"
-gdown.download(url, model_path, quiet=False)
+
+if not os.path.exists(model_path):
+    gdown.download(url, model_path, quiet=False)
 
 with open(model_path, "rb") as f:
     saved = pickle.load(f)
@@ -156,9 +160,9 @@ if st.button("Predict"):
             df[col] = le.transform(df[col])
 
 
-    df_scaled = scaler.transform(df)
-
+    df_scaled = pd.DataFrame(scaler.transform(df), columns=df.columns)
     prediction = model.predict(df_scaled)
+
     result = "Jadi Book" if prediction == 1 else "Cancel Book"
     st.success(f"prediction: {result}")
 

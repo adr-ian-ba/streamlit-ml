@@ -1,6 +1,16 @@
 import pickle
 import pandas as pd
+import gdown
+import os
 
+model_path = "best_rf_model.pkl"
+url = "https://drive.google.com/uc?id=1Ji_Nc_VUH7SBbXQ7hNMyGL76_OqxHbnb"
+
+if not os.path.exists(model_path):
+    gdown.download(url, model_path, quiet=False)
+
+with open(model_path, "rb") as f:
+    saved = pickle.load(f)
 
 tes_input = {
     'no_of_adults': 2,
